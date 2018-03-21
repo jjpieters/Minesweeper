@@ -1,4 +1,4 @@
-package nl.solusiv.minesweeper.views.grid;
+package nl.solusiv.minesweeper20.cell;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,19 +6,19 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
-import nl.solusiv.minesweeper.GameEngine;
-import nl.solusiv.minesweeper.R;
+import nl.solusiv.minesweeper20.GameEngine;
+import nl.solusiv.minesweeper20.R;
 
 /**
- * Created by super on 11-3-2018.
+ * Created by super on 17-3-2018.
  */
 
-public class Cell extends BaseCell implements View.OnClickListener , View.OnLongClickListener{
+public class Cell extends BaseCell implements View.OnClickListener, View.OnLongClickListener {
 
-    public Cell(Context context, int position){
+    public Cell( Context context , int x , int y ){
         super(context);
 
-        setPosition(position);
+        setPosition(x,y);
 
         setOnClickListener(this);
         setOnLongClickListener(this);
@@ -30,61 +30,72 @@ public class Cell extends BaseCell implements View.OnClickListener , View.OnLong
     }
 
     @Override
+    public void onClick(View v) {
+        GameEngine.getInstance().click( getXPos(), getYPos() );
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if(!this.isRevealed()) {
+            GameEngine.getInstance().flag(getXPos(), getYPos());
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         drawButton(canvas);
 
-        if(isFlagged()){
+        if( isFlagged() ){
             drawFlag(canvas);
-        } else if(isRevealed() && isBomb() && !isClicked()){
-            drawBomb(canvas);
-        } else {
-            if(isClicked()){
-                if(getValue() == -1){
-                    drawBomb(canvas);
-                } else {
+        }else if( isRevealed() && isBomb() && !isClicked() ){
+            drawNormalBomb(canvas);
+        }else {
+            if( isClicked() ){
+                if( getValue() == -1 ){
+                    drawBombExploded(canvas);
+                }else {
                     drawNumber(canvas);
                 }
-            } else {
+            }else{
                 drawButton(canvas);
             }
         }
     }
 
-    private void drawFlag(Canvas canvas){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.flag);
-        drawable.setBounds(0,0,getWidth(),getHeight());
-        drawable.draw(canvas);
-    }
-
-    private void drawButton(Canvas canvas){
-        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.button);
-        drawable.setBounds(0,0,getWidth(),getHeight());
-        drawable.draw(canvas);
-    }
-
-    private void drawBomb(Canvas canvas){
+    private void drawBombExploded(Canvas canvas ){
         Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bomb);
         drawable.setBounds(0,0,getWidth(),getHeight());
         drawable.draw(canvas);
     }
 
-    @Override
-    public void onClick(View view) {
-        GameEngine.getInstance().click(getXPos(),getYPos());
+    private void drawFlag( Canvas canvas ){
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.flag);
+        drawable.setBounds(0,0,getWidth(),getHeight());
+        drawable.draw(canvas);
     }
 
-    @Override
-    public boolean onLongClick(View view) {
-        GameEngine.getInstance().flag(getXPos(),getYPos());
-        return false;
+    private void drawButton(Canvas canvas ){
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.button);
+        drawable.setBounds(0,0,getWidth(),getHeight());
+        drawable.draw(canvas);
     }
 
-    private void drawNumber(Canvas canvas){
+    private void drawNormalBomb(Canvas canvas ){
+        Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.bomb_normal);
+        drawable.setBounds(0,0,getWidth(),getHeight());
+        drawable.draw(canvas);
+    }
+
+    private void drawNumber( Canvas canvas ){
         Drawable drawable = null;
 
-        switch(getValue()){
+        switch (getValue() ){
             case 0:
                 drawable = ContextCompat.getDrawable(getContext(), R.drawable.num_0);
                 break;
@@ -117,5 +128,4 @@ public class Cell extends BaseCell implements View.OnClickListener , View.OnLong
         drawable.setBounds(0,0,getWidth(),getHeight());
         drawable.draw(canvas);
     }
-
 }

@@ -1,4 +1,4 @@
-package nl.solusiv.minesweeper;
+package nl.solusiv.minesweeper20;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("nl.solusiv.minesweeper", appContext.getPackageName());
+        assertEquals("nl.solusiv.minesweeper20", appContext.getPackageName());
     }
 }

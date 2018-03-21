@@ -1,12 +1,12 @@
-package nl.solusiv.minesweeper.views.grid;
+package nl.solusiv.minesweeper20.cell;
 
 import android.content.Context;
 import android.view.View;
 
-import nl.solusiv.minesweeper.GameEngine;
+import nl.solusiv.minesweeper20.GameEngine;
 
 /**
- * Created by super on 11-3-2018.
+ * Created by super on 17-3-2018.
  */
 
 public class BaseCell extends View {
@@ -17,8 +17,7 @@ public class BaseCell extends View {
     private boolean isClicked;
     private boolean isFlagged;
 
-    private int x, y;
-    private int position;
+    private int x,y;
 
     public BaseCell(Context context) {
         super(context);
@@ -53,8 +52,9 @@ public class BaseCell extends View {
         return isRevealed;
     }
 
-    public void setRevealed(boolean revealed){
-        isRevealed = revealed;
+    public void setRevealed(){
+        isRevealed = true;
+        invalidate();
     }
 
     public boolean isClicked(){
@@ -65,6 +65,7 @@ public class BaseCell extends View {
         this.isClicked = true;
         this.isRevealed = true;
 
+        //
         invalidate();
     }
 
@@ -92,17 +93,15 @@ public class BaseCell extends View {
         this.y = y;
     }
 
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-
-        x = position % GameEngine.getInstance().getWidth();
-        y = position / GameEngine.getInstance().getHeight();
+    public void setPosition(int x, int y){
+        this.x = x;
+        this.y = y;
 
         invalidate();
+
     }
 
+    public int[][] getPosition(){
+        return new int[x][y];
+    }
 }

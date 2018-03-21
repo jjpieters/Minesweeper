@@ -1,4 +1,4 @@
-package nl.solusiv.minesweeper;
+package nl.solusiv.minesweeper20;
 
 import org.junit.Test;
 
