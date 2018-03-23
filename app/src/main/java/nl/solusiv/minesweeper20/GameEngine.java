@@ -2,7 +2,6 @@ package nl.solusiv.minesweeper20;
 
 import android.app.Activity;
 import android.content.Context;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import nl.solusiv.minesweeper20.cell.Cell;
@@ -16,7 +15,7 @@ import nl.solusiv.minesweeper20.util.Generator;
 public class GameEngine extends Activity {
     private static GameEngine instance;
 
-    private int bombNumber = 10, width = 20, height = 20;
+    private int bombNumber = 50, width = 20, height = 20;
     private boolean game = true;
     private boolean startedTimer = false;
 

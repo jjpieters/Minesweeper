@@ -7,32 +7,33 @@
     android:orientation="horizontal"
     tools:context="nl.solusiv.minesweeper20.MainActivity">
 
-        <HorizontalScrollView
-            android:id="@+id/horizontalscroll"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:fillViewport="true">
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:weightSum="3">
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <!-- The width of the layout below will be calculated in code. -->
+            <!-- Only using '-1' here for temporary inflating -->
+            <FrameLayout
+                android:id="@+id/layout_grid"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <nl.solusiv.minesweeper20.views.grid.Grid
                     android:id="@+id/minesweeperGridView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:columnWidth="90dp"
                     android:gravity="left"
-                    android:padding="10dp"
-                    android:paddingTop="0dp" />
+                    android:padding="10dp"/>
 
-            </LinearLayout>
-
-        </HorizontalScrollView>
+            </FrameLayout>
+        </FrameLayout>
+    </HorizontalScrollView>
 
 </RelativeLayout>
